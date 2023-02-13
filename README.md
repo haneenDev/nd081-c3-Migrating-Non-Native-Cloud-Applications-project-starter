@@ -60,12 +60,16 @@ You will need to install the following locally:
 
 ## Monthly Cost Analysis
 Complete a month cost analysis of each Azure resource to give an estimate total cost using the table below:
-
 | Azure Resource | Service Tier | Monthly Cost |
 | ------------ | ------------ | ------------ |
-| *Azure Postgres Database* |     |              |
-| *Azure Service Bus*   |         |              |
-| ...                   |         |              |
+| *Azure Postgres Database* | Single Server - Basic - 4 vCore - 100 GB | $267.30 |
+| *Azure Service Bus*   | Basic - 1 Million | $0.5 |
+| *Azure Function App* | serverless | free |
+| *Azure Web App* | Free | Free |
+| *Total* | | $267.8 |
 
 ## Architecture Explanation
-This is a placeholder section where you can provide an explanation and reasoning for your architecture selection for both the Azure Web App and Azure Function.
+For the Function App, I choose the consumption plan serverless,which is free and not charged unless the app is on runinng. For App Service I choose Basic because I consider that it includes everything we need to be able to test the application. Combining this two resources you can obtain good cost optimization. Since we don't have to maintain a VM this arhitecture is also profitable. In existing architecture,the web app is non-scalable to manage the task of top users. Because the admin runs over all participants when sending alerts, it takes a long time and occasionally encounters HTTP expiration exceptions, making the existing architecture unprofitable. In current architecture, Azure Webapp and Azure Function are more controlled and can scale up/down easily. 
+
+When compared, for instance, with a VM design, this architecture becomes very cost-effective by leveraging Service Bus Queue Trigger for sending emails to numerous recipients. The fact that messages are stored in queues means that senders and receivers don't have to transmit and receive messages at the same time. 
+When a backend API is implemented with Azure Function, front-end apps run faster even under heavy traffic, greatly improving application response.
